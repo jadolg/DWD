@@ -17,10 +17,6 @@ def list(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
-            documents = Document.objects.all()
-            for document in documents:
-                os.remove(os.path.join(settings.MEDIA_ROOT, document.docfile.name))
-                document.delete()
             newdoc = Document(docfile=request.FILES['docfile'])
             newdoc.save()
 
@@ -38,3 +34,19 @@ def list(request):
         {'documents': documents, 'form': form},
         context_instance=RequestContext(request)
     )
+
+@login_required(login_url='/login')
+def clean(request):
+    documents = Document.objects.all()
+    for document in documents:
+        os.remove(os.path.join(settings.MEDIA_ROOT, document.docfile.name))
+        document.delete()
+    return HttpResponseRedirect(reverse('myproject.myapp.views.list'))
+
+
+@login_required(login_url='/login')
+def delete(request,id):
+    document = Document.objects.get(id=id)
+    os.remove(os.path.join(settings.MEDIA_ROOT, document.docfile.name))
+    document.delete()
+    return HttpResponseRedirect(reverse('myproject.myapp.views.list'))

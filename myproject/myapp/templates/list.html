@@ -10,7 +10,7 @@
         {% if documents %}
             <ul>
                 {% for document in documents %}
-                    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a></li>
+                    <li><a href="{{ document.docfile.url }}">{{ document.docfile.name }}</a> -- <a href="/dwd/delete/{{ document.id }}">Delete</a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -31,6 +31,7 @@
 
             <p><input type="submit" value="Upload"/></p>
         </form>
+    <a href="/dwd/clean/{{ document.id }}">Clean</a>
     </body>
 
 </html>
