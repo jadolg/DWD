@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>MDownloader3 App</title>
+</head>
+<body>
+{% if form.errors %}
+    <p>Invalid Username or Password. If you don't have an account just <b>PISS OFF!</b></p>
+{% endif %}
+<p>YOU SHALL NOT PASS!!</p>
+
+<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
+{% csrf_token %}
+<table>
+<tr>
+    <td>UserName:</td>
+    <td>{{ form.username }}</td>
+</tr>
+<tr>
+    <td>Password:</td>
+    <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="Log me IN MadaFacka!" />
+<input type="hidden" name="next" value="{{ next|default:"/"}}" />
+</form>
+</body>
+</html>
